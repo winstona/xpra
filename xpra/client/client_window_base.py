@@ -333,7 +333,7 @@ class ClientWindowBase(ClientWidgetBase):
             self.set_class_instance(*self._metadata.strtupleget("class-instance", ("xpra", "Xpra"), 2, 2))
             self.reset_icon()
 
-        if "title" in metadata:
+        if "title" in metadata or "video-encoder" in metadata:
             title = self._get_window_title(metadata)
             self.set_title(title)
 

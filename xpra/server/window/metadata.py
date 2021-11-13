@@ -115,7 +115,7 @@ def do_make_window_metadata(window, propname, get_transient_for=None, get_window
             return {}
         #always send these when requested
         return {propname : bool(raw())}
-    if propname in ("has-alpha", "override-redirect", "tray", "shadow", "set-initial-position"):
+    if propname in ("has-alpha", "override-redirect", "tray", "shadow", "set-initial-position", "video-encoder"):
         v = raw()
         if not v and skip_defaults:
             #save space: all these properties are assumed false if unspecified

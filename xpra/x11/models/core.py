@@ -148,6 +148,10 @@ class CoreX11WindowModel(WindowModelStub):
         "title": (GObject.TYPE_PYOBJECT,
                 "Window title (unicode or None)", "",
                 GObject.ParamFlags.READABLE),
+        #virtual placeholder
+        "video-encoder": (GObject.TYPE_PYOBJECT,
+                "Window video encoder", "",
+                GObject.ParamFlags.READABLE),
         #from WM_WINDOW_ROLE
         "role" : (GObject.TYPE_PYOBJECT,
                 "The window's role (ICCCM session management)", "",
@@ -215,7 +219,7 @@ class CoreX11WindowModel(WindowModelStub):
         "opaque-region",
         ]
     #exposed and changing (should be watched for notify signals):
-    _dynamic_property_names = ["title", "command", "shape", "class-instance", "protocols", "opaque-region"]
+    _dynamic_property_names = ["title", "command", "shape", "class-instance", "protocols", "opaque-region", "video-encoder"]
     #should not be exported to the clients:
     _internal_property_names = ["frame", "allowed-actions"]
     _initial_x11_properties = ["_NET_WM_PID", "WM_CLIENT_MACHINE",

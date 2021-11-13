@@ -837,6 +837,7 @@ class GTKXpraClient(GObjectXpraClient, UIXpraClient):
             ms += ["command", "workspace", "above", "below", "sticky",
                    "set-initial-position",  #0.17
                    "content-type",
+                   "video-encoder",
                    ]
         if POSIX:
             #this is only really supported on X11, but posix is easier to check for..
