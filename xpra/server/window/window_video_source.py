@@ -126,11 +126,21 @@ class WindowVideoSource(WindowSource):
         self.video_subregion = VideoSubregion(self.timeout_add, self.source_remove, self.refresh_subregion, self.auto_refresh_delay)
         self.video_stream_file = None
 
+        self.window.get_video_encoder = self.get_video_encoder_type
+
+    def get_video_encoder_type(self):
+        if self._video_encoder:
+            return self._video_encoder.get_type()
+        return "None"
+
     def init_encoders(self):
         super().init_encoders()
         self._csc_encoder = None
         self._video_encoder = None
         self._last_pipeline_check = 0
+
+        self.window._updateprop("video-encoder", self.get_video_encoder_type())
+
         if has_codec("csc_libyuv"):
             #need libyuv to be able to handle 'grayscale' video:
             #(to convert ARGB to grayscale)
@@ -338,6 +348,8 @@ class WindowVideoSource(WindowSource):
                 self.csc_clean(csce)
                 self.ve_clean(ve)
             self.call_in_encode_thread(False, clean)
+
+            self.window._updateprop("video-encoder", self.get_video_encoder_type())
 
     def csc_clean(self, csce):
         if csce:
@@ -1726,6 +1738,7 @@ class WindowVideoSource(WindowSource):
         enc_end = monotonic()
         self.start_video_frame = 0
         self._video_encoder = ve
+        self.window._updateprop("video-encoder", self.get_video_encoder_type())
         videolog("setup_pipeline: csc=%s, video encoder=%s, info: %s, setup took %.2fms",
                 csce, ve, ve.get_info(), (enc_end-enc_start)*1000.0)
         scalinglog("setup_pipeline: scaling=%s, encoder_scaling=%s", scaling, encoder_scaling)

@@ -159,6 +159,11 @@ class RootWindowModel:
                 return ()
         if prop=="content-type":
             return "desktop"
+        if prop=="video-encoder":
+            if hasattr(self, 'get_video_encoder'):
+                return self.get_video_encoder()
+            else:
+                return "UnknownProp"
         raise ValueError("invalid property: %s" % prop)
 
     def get(self, name, default_value=None):
